@@ -59,7 +59,10 @@ public class Calc2 extends HttpServlet{
 			
 			session.setAttribute("value",v);
 			session.setAttribute("op",op); 
+			response.sendRedirect("calc2.html");
 		}
+		
+		
 		
 		
 		
