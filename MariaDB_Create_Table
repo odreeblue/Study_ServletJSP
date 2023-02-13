@@ -1,0 +1,59 @@
+CREATE TABLE NOTICE
+(
+     ID	        BIGINT,
+     TITLE 		NVARCHAR(100),
+     WRITER_ID	NVARCHAR(50),
+     CONTENT	LONGTEXT,
+     REGDATE  	DATETIME,
+     HIT		BIGINT,
+     FILES		NVARCHAR(1000)
+);
+
+INSERT INTO NOTICE(ID,TITLE,WRITER_ID,CONTENT,REGDATE,HIT,FILES)
+VALUES(1,
+        '1번 테이블',
+        '1번 Writer ID',
+        '1번의 컨텐츠는 아직 채워지지 않았따',
+        '2016-02-16 22:31:59',
+        32,
+        NULL
+        );
+INSERT INTO NOTICE(ID,TITLE,WRITER_ID,CONTENT,REGDATE,HIT,FILES)
+VALUES(2,
+        '2번 테이블',
+        '2번 Writer ID',
+        '2번의 컨텐츠는 아직 채워지지 않았따',
+        '2020-02-16 19:14:22',
+        88,
+        NULL
+        );
+INSERT INTO NOTICE(ID,TITLE,WRITER_ID,CONTENT,REGDATE,HIT,FILES)
+VALUES(2,
+        '2번 테이블',
+        '2번 Writer ID',
+        '2번의 컨텐츠는 아직 채워지지 않았따',
+        '2020-02-16 19:14:22',
+        88,
+        NULL
+        );
+
+CREATE TABLE COMMENT
+(
+     ID		    BIGINT,
+     CONTENT	NVARCHAR(2000),
+     REGDATE  	DATETIME,
+     WRITER_ID	NVARCHAR(50),
+     NOTICE_ID	BIGINT
+);
+
+CREATE TABLE ROLE
+(
+     ID		        VARCHAR(50),
+     DISCRIPTION 	NVARCHAR(500)
+);
+
+CREATE TABLE MEMBER_ROLE
+(
+     MEMBER_ID	    NVARCHAR(50),
+     ROLE_ID		VARCHAR(50)
+);
