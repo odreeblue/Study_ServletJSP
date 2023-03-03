@@ -6,8 +6,11 @@
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="operator\&quot;"/>
+		<item key="selection" value="count"/>
 		<list key="findhistory">
+			<item value="count"/>
+			<item value="form"/>
+			<item value="list.jsp"/>
 			<item value="operator&quot;"/>
 			<item value="submit&quot;"/>
 			<item value="=&quot;"/>
@@ -21,8 +24,8 @@
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="1309"/>
-		<item key="DIALOG_Y_ORIGIN" value="354"/>
+		<item key="DIALOG_X_ORIGIN" value="1148"/>
+		<item key="DIALOG_Y_ORIGIN" value="359"/>
 		<item key="DIALOG_WIDTH" value="336"/>
 		<item key="DIALOG_HEIGHT" value="402"/>
 		<item key="DIALOG_FONT_NAME" value="1|.AppleSystemUIFont|11.0|0|COCOA|1|.AppleSystemUIFont"/>

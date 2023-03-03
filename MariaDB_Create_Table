@@ -14,7 +14,7 @@ VALUES(1,
         '1번 테이블',
         '1번 Writer ID',
         '1번의 컨텐츠는 아직 채워지지 않았따',
-        '2016-02-16 22:31:59',
+        '1800-07-16 22:31:59',
         32,
         NULL
         );
@@ -23,20 +23,73 @@ VALUES(2,
         '2번 테이블',
         '2번 Writer ID',
         '2번의 컨텐츠는 아직 채워지지 않았따',
-        '2020-02-16 19:14:22',
+        '1892-09-24 19:14:22',
         88,
         NULL
         );
 INSERT INTO NOTICE(ID,TITLE,WRITER_ID,CONTENT,REGDATE,HIT,FILES)
-VALUES(2,
-        '2번 테이블',
-        '2번 Writer ID',
-        '2번의 컨텐츠는 아직 채워지지 않았따',
-        '2020-02-16 19:14:22',
-        88,
+VALUES(3,
+        '3번 테이블',
+        '3번 Writer ID',
+        '3번의 컨텐츠는 아직 채워지지 않았따',
+        '1992-02-16 16:01:22',
+        1344,
         NULL
         );
-
+INSERT INTO NOTICE(ID,TITLE,WRITER_ID,CONTENT,REGDATE,HIT,FILES)
+VALUES(4,
+        '4번 테이블',
+        '4번 Writer ID',
+        '4번의 컨텐츠는 아직 채워지지 않았따',
+        '1994-06-29 01:14:21',
+        1002344,
+        NULL
+        );
+INSERT INTO NOTICE(ID,TITLE,WRITER_ID,CONTENT,REGDATE,HIT,FILES)
+VALUES(5,
+        '5번 테이블',
+        '5번 Writer ID',
+        '5번의 컨텐츠는 아직 채워지지 않았따',
+        '1995-07-06 13:07:01',
+        9992311,
+        NULL
+        );
+INSERT INTO NOTICE(ID,TITLE,WRITER_ID,CONTENT,REGDATE,HIT,FILES)
+VALUES(6,
+        '6번 테이블',
+        '6번 Writer ID',
+        '6번의 컨텐츠는 아직 채워지지 않았따',
+        '1997-02-17 21:00:01',
+        95400,
+        NULL
+        );
+INSERT INTO NOTICE(ID,TITLE,WRITER_ID,CONTENT,REGDATE,HIT,FILES)
+VALUES(7,
+        '7번 테이블',
+        '7번 Writer ID',
+        '7번의 컨텐츠는 아직 채워지지 않았따',
+        '2000-10-10 09:00:01',
+       123000,
+        NULL
+        );
+INSERT INTO NOTICE(ID,TITLE,WRITER_ID,CONTENT,REGDATE,HIT,FILES)
+VALUES(8,
+        '8번 테이블',
+        '8번 Writer ID',
+        '8번의 컨텐츠는 아직 채워지지 않았따',
+        '2001-12-31 23:59:59',
+       999900,
+        NULL
+        );
+INSERT INTO NOTICE(ID,TITLE,WRITER_ID,CONTENT,REGDATE,HIT,FILES)
+VALUES(9,
+        '9번 테이블',
+        '9번 Writer ID',
+        '9번의 컨텐츠는 아직 채워지지 않았따',
+        '2002-06-02 12:32:12',
+       257459,
+        NULL
+        );
 CREATE TABLE COMMENT
 (
      ID		    BIGINT,
