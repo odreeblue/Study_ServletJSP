@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.Date;
@@ -20,7 +21,32 @@ public class NoticeService {
 		return 0;
 	}
 	public int insertNotice(Notice notice) {
-		return 0;
+		int result = 0;
+		
+		String sql = "INSERT INTO NOTICE(TITLE,CONTENT,WRITER_ID,PUB) VALUES(?,?,?,?)";
+		
+		String url = "jdbc:mariadb://152.67.208.143:3306/test"; // Mariadb
+		try {
+			Class.forName("org.mariadb.jdbc.Driver");
+			Connection con = DriverManager.getConnection(url, "root", "1234");
+			PreparedStatement st = con.prepareStatement(sql);
+			st.setString(1, notice.getTitle());
+			st.setString(2, notice.getContent());
+			st.setString(3, notice.getWriterId());
+			st.setString(4, notice.getPub());
+
+			result = st.executeUpdate();
+			
+			st.close();
+			con.close();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
 	}
 	
 	public int deleteNotice(int id) {
@@ -76,7 +102,8 @@ public class NoticeService {
 				String hit = rs.getString("HIT");
 				String files = rs.getString("FILES");
 				String content = rs.getString("CONTENT");
-				Notice notice = new Notice(id,title,writerId,regdate,hit,files,content);
+				String pub = rs.getString("PUB");
+				Notice notice = new Notice(id,title,writerId,regdate,hit,files,content,pub);
 				list.add(notice);
 			}
 			rs.close();
@@ -152,7 +179,8 @@ public class NoticeService {
 				String hit = rs.getString("HIT");
 				String files = rs.getString("FILES");
 				String content = rs.getString("CONTENT");
-				notice = new Notice(nid,title,writerId,regdate,hit,files,content);
+				String pub = rs.getString("PUB");
+				notice = new Notice(nid,title,writerId,regdate,hit,files,content,pub);
 			}
 			rs.close();
 			st.close();
@@ -191,7 +219,8 @@ public class NoticeService {
 				String hit = rs.getString("HIT");
 				String files = rs.getString("FILES");
 				String content = rs.getString("CONTENT");
-				notice = new Notice(nid,title,writerId,regdate,hit,files,content);
+				String pub = rs.getString("PUB");
+				notice = new Notice(nid,title,writerId,regdate,hit,files,content,pub);
 				
 			}
 			rs.close();
@@ -234,7 +263,8 @@ public class NoticeService {
 				String hit = rs.getString("HIT");
 				String files = rs.getString("FILES");
 				String content = rs.getString("CONTENT");
-				notice = new Notice(nid,title,writerId,regdate,hit,files,content);	
+				String pub = rs.getString("PUB");
+				notice = new Notice(nid,title,writerId,regdate,hit,files,content,pub);	
 			}
 			rs.close();
 			st.close();
@@ -247,6 +277,37 @@ public class NoticeService {
 			e.printStackTrace();
 		}
 		return notice;
+	}
+	public int deleteNoticeAll(int[] ids) {
+		int result = 0;
+		String params = "";
+		for(int i=0; i<ids.length; i++) {
+			params+=ids[i];
+			if (i < ids.length-1) {
+				params +=",";
+			}
+		}
+		String sql = "DELETE FROM NOTICE WHERE ID IN ("+params+")";
+		
+		String url = "jdbc:mariadb://152.67.208.143:3306/test"; // Mariadb
+		try {
+			Class.forName("org.mariadb.jdbc.Driver");
+			Connection con = DriverManager.getConnection(url, "root", "1234");
+			Statement st = con.createStatement();
+			
+
+			result = st.executeUpdate(sql);
+			
+			st.close();
+			con.close();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	
