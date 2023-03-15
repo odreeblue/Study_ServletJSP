@@ -23,7 +23,7 @@ public class NoticeService {
 	public int insertNotice(Notice notice) {
 		int result = 0;
 		
-		String sql = "INSERT INTO NOTICE(TITLE,CONTENT,WRITER_ID,PUB) VALUES(?,?,?,?)";
+		String sql = "INSERT INTO NOTICE(TITLE,CONTENT,WRITER_ID,PUB,FILES) VALUES(?,?,?,?,?)";
 		
 		String url = "jdbc:mariadb://152.67.208.143:3306/test"; // Mariadb
 		try {
@@ -34,6 +34,7 @@ public class NoticeService {
 			st.setString(2, notice.getContent());
 			st.setString(3, notice.getWriterId());
 			st.setString(4, notice.getPub());
+			st.setString(5, notice.getFiles());
 
 			result = st.executeUpdate();
 			
@@ -119,7 +120,49 @@ public class NoticeService {
 		
 		return list;
 	}
-	
+	public List<Notice> getNoticePubList(String field, String query, int page) {
+List<Notice> list = new ArrayList<>();
+		
+		String sql = "SELECT * FROM( "
+				+ " SELECT @ROWNUM:=@ROWNUM+1 AS rowNUM, N.* "
+				+ " FROM (SELECT * FROM NOTICE WHERE PUB=\"true\" AND "+field+" LIKE ?) N,(SELECT @ROWNUM:=0) R ORDER BY REGDATE DESC) T"
+				+ " LIMIT ?,?;";
+		String url = "jdbc:mariadb://152.67.208.143:3306/test"; // Mariadb
+
+		try {
+			Class.forName("org.mariadb.jdbc.Driver");
+			Connection con = DriverManager.getConnection(url, "root", "1234");
+			//Statement st = con.createStatement();
+			PreparedStatement st = con.prepareStatement(sql);
+			st.setString(1, "%"+query+"%");
+			st.setInt(2, (page-1)*10);
+			st.setInt(3, page*10-1);
+			ResultSet rs = st.executeQuery();
+			while (rs.next()) {
+				int id = rs.getInt("ID");
+				String title = rs.getString("TITLE");
+				String writerId = rs.getString("WRITER_ID");
+				Date regdate = rs.getDate("REGDATE");
+				String hit = rs.getString("HIT");
+				String files = rs.getString("FILES");
+				String content = rs.getString("CONTENT");
+				String pub = rs.getString("PUB");
+				Notice notice = new Notice(id,title,writerId,regdate,hit,files,content,pub);
+				list.add(notice);
+			}
+			rs.close();
+			st.close();
+			con.close();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
 	public int getNoticeCount() {
 		return getNoticeCount("title","");
 	}
@@ -309,6 +352,7 @@ public class NoticeService {
 		}
 		return result;
 	}
+
 
 	
 	

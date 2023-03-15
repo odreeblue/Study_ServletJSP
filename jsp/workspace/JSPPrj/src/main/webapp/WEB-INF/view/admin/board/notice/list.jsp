@@ -169,6 +169,10 @@
 							</thead>
 							<tbody>
 								<c:forEach var="n" items="${list}">
+									<c:set var="open" value="" />
+									<c:if test="${n.pub=='true'}">
+										<c:set var="open" value="checked" />
+									</c:if>
 
 									<tr>
 										<td>${n.id }</td>
@@ -179,7 +183,9 @@
 										<td><fmt:formatDate pattern="yyyy-MM-dd"
 												value="${n.regdate }" /></td>
 										<td><fmt:formatNumber value="${n.hit}" /></td>
-										<td><input type="checkbox" name="open-id" value="${n.id }"></td>
+
+										<td><input type="checkbox" name="open-id" ${open}
+											value="${n.id }"></td>
 										<td><input type="checkbox" name="del-id" value="${n.id }"></td>
 									</tr>
 								</c:forEach>
