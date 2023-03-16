@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.sql.Date;
 import java.util.List;
 
@@ -27,23 +28,44 @@ public class ListController extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String[] openIds=request.getParameterValues("open-id");
+		String[] openIds=request.getParameterValues("open-id"); // 공개해야할 아이디
 		String[] delIds = request.getParameterValues("del-id");
 		String cmd=request.getParameter("cmd");
+		String ids_=request.getParameter("ids");
+		
+		String[] ids = ids_.trim().split(" "); // 전체 목록
+		
+		NoticeService service = new NoticeService();
+		
 		switch(cmd) {
 		case "일괄공개":
 			for(String openId:openIds) {
 				System.out.printf("open id : %s \n", openId);
 			}
+			
+			List<String> oids = Arrays.asList(openIds);
+			// 1,2,3,4,5,6,7,8,9 : 전체 열
+			// 3,5,8			 : 공개해야할 열
+			List<String> cids = new ArrayList(Arrays.asList(ids));
+			
+			cids.removeAll(oids);
+			System.out.println(Arrays.asList(ids));
+			System.out.println(oids);
+			System.out.println(cids);
+			
+			// Transaction 처리: 내가 생각하는 기본 단위, 업무 단위 ..
+			service.pubNoticeAll(oids,cids); //UPDATE NOTICE SET PUB ='true' WHERE ID IN (...);
+			//service.closeNoticeList(clsIds);
+			
 			break;
 		case "일괄삭제":
-			NoticeService service = new NoticeService();
 			
-			int[] ids = new int[delIds.length];
+			
+			int[] ids1 = new int[delIds.length];
 			for(int i=0; i<delIds.length; i++) {
-				ids[i] = Integer.parseInt(delIds[i]);
+				ids1[i] = Integer.parseInt(delIds[i]);
 			}
-			int result = service.deleteNoticeAll(ids);
+			int result = service.deleteNoticeAll(ids1);
 			for(String delId:delIds) {
 				System.out.printf("del id : %s \n", delId);
 			}

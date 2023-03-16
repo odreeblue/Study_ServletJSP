@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.sql.Date;
 import com.newlecture.web.entity.Notice;
@@ -17,8 +18,54 @@ public class NoticeService {
 	public int removeNoticeAll(int[] ids) {
 		return 0;
 	}
-	public int pubNoticeAll(int[] ids) {
-		return 0;
+	public int pubNoticeAll(int[] oids,int[] cids) {
+		
+		List<String> oidsList = new ArrayList<>();
+		for(int i=0; i<oids.length;i++) {
+			oidsList.add(String.valueOf(oids[i]));
+		}
+		
+		List<String> cidsList = new ArrayList<>();
+		for(int i=0; i<cids.length;i++) {
+			cidsList.add(String.valueOf(cids[i]));
+		}
+		
+		return pubNoticeAll(oidsList,cidsList);
+	}
+	public int pubNoticeAll(List<String> oids,List<String> cids) {
+		String oidsCSV = String.join(",", oids);
+		String cidsCSV = String.join(",", cids);;
+		return pubNoticeAll(oidsCSV,cidsCSV);
+	}
+	// "20,30,43,56.."
+	public int pubNoticeAll(String oidsCSV,String cidsCSV) {
+		
+		int result = 0;
+		String sqlOpen = String.format("UPDATE NOTICE SET PUB=\"true\" WHERE ID IN (%s)",oidsCSV);
+	
+		String sqlClose = String.format("UPDATE NOTICE SET PUB=\"false\" WHERE ID IN (%s)",cidsCSV);
+		
+		String url = "jdbc:mariadb://152.67.208.143:3306/test"; // Mariadb
+		try {
+			Class.forName("org.mariadb.jdbc.Driver");
+			Connection con = DriverManager.getConnection(url, "root", "1234");
+			Statement stOpen = con.createStatement();
+			result += stOpen.executeUpdate(sqlOpen);
+			
+			Statement stClose = con.createStatement();
+			result += stClose.executeUpdate(sqlClose);
+			
+			stOpen.close();
+			stClose.close();
+			con.close();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
 	}
 	public int insertNotice(Notice notice) {
 		int result = 0;
